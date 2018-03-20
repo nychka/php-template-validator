@@ -1,0 +1,22 @@
+{
+  "name": "php-template-validator",
+  "description": "provides the best option from configuration based on passed data",
+  "homepage": "http://github.com/nychka/php-template-validator",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nychka Yaroslav",
+      "email": "yaroslav_nychka@epam.com"
+    }
+  ],
+  "require": {
+    "php": ">5.6.0",
+    "phpunit/phpunit": "5.6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Epam\\": "src/",
+      "Epam\\Test\\": "tests/"
+    }
+  }
+}
