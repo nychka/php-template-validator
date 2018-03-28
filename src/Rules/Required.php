@@ -2,18 +2,14 @@
 
 namespace Epam\Rules;
 
-use \Epam\Validatable;
+use Epam\Rules\AbstractRule;
 
-class Required implements Validatable
+class Required extends AbstractRule
 {
-	public function validate($data)
-	{
-		if(is_string($data)){
-			return (bool) strlen($data);
-		}else if(is_array($data)){
-			return ! empty($data);
-		}else{
-            return ! is_null($data);
-        }
-	}
+    protected $errorMessage = 'Rule Required is not valid!';
+
+    protected function handle($data)
+    {
+        return !is_null($data);
+    }
 }

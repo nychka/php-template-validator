@@ -6,45 +6,36 @@ use Epam\Rules\Required;
 
 class RequiredTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsValidWhenString()
+    public function setUp()
     {
-        $rule = new Required();
-
-        $this->assertTrue($rule->validate('foo'));
+        $this->rule = new Required();
+        $this->errorMessage = 'Rule Required is not valid!';
     }
 
-    public function testIsNotValidWhenEmptyString()
+    public function testIsValidWhenNull()
     {
-        $rule = new Required();
-
-        $this->assertFalse($rule->validate(''));
+        $this->assertFalse($this->rule->validate(null));
+        $this->assertFalse($this->rule->isValid());
     }
 
-    public function testIsValidWhenBoolean()
+    public function testIsValidWhenNotNull()
     {
-        $rule = new Required();
-
-        $this->assertTrue($rule->validate(false));
+        $this->assertTrue($this->rule->validate(1));
+        $this->assertTrue($this->rule->isValid());
     }
 
-    public function testIsNotValidWhenNull()
+    public function testErrorMessage()
     {
-        $rule = new Required();
+        $this->rule->validate(null);
 
-        $this->assertFalse($rule->validate(null));
+        $this->assertEquals($this->errorMessage, $this->rule->error());
     }
 
-    public function testIsValidWhenZero()
+    /**
+     * @expectedException Epam\Exceptions\PropertyNotDefinedException
+     */
+    public function testErrorMessageWhenNotDefined()
     {
-        $rule = new Required();
-
-        $this->assertTrue($rule->validate(0));
-    }
-
-    public function testIsNotValidWhenEmptyArray()
-    {
-        $rule = new Required();
-
-        $this->assertFalse($rule->validate([]));
+        $this->rule->error();
     }
 }

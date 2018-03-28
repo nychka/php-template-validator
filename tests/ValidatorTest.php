@@ -4,7 +4,7 @@ namespace Epam\Test;
 
 use Epam\Validator;
 use Epam\Validatable;
-use Epam\Rules\Required;
+use Epam\Rules;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,21 +15,31 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf(Validatable::class, $instance);
 	}
 
-	public function testValidateWithRequiredRule()
+	public function testValidateWhenValid()
 	{
 		$data = ['foo' => 'bar'];
-		$rules = ['foo' => [new Required()]];
+		$rules = ['foo' => [new Rules\Required()]];
 		$validator = new Validator($rules);
 
 		$this->assertTrue($validator->validate($data));
 	}
 
-	public function testValidateWithRequiredRuleWhenEmptyString()
-	{
-		$data = ['foo' => ''];
-		$rules = ['foo' => [new Required()]];
-		$validator = new Validator($rules);
+	public function testValidateWhenInvalid()
+    {
+        $data = ['foo' => ''];
+        $rules = ['foo' => [new Rules\Required()]];
+        $validator = new Validator($rules);
 
-		$this->assertFalse($validator->validate($data));
-	}
+        $this->assertFalse($validator->validate($data));
+    }
+
+    public function testValidateWithTwoRules()
+    {
+        $data = ['foo' => 123];
+        $rules = ['foo' => [new Rules\Required(), new Rules\Type('string')]];
+        $validator = new Validator($rules);
+
+        $this->assertFalse($validator->validate($data));
+        $this->assertEquals($validator->errors(), ['expected string, but integer given']);
+    }
 }
