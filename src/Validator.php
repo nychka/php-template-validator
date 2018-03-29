@@ -3,11 +3,14 @@
 namespace Epam;
 
 use Epam\Exceptions\RuleNotPassedException;
+use Epam\Exceptions\WrongTypeException;
+use Epam\Rules\AbstractRule;
+use Epam\Rules\Required;
 
 class Validator implements Validatable
 {
-	private $rules;
-	private $errors = [];
+	protected $rules;
+	protected $errors = [];
 
 	public function __construct(Array $rules = [])
 	{
@@ -16,14 +19,14 @@ class Validator implements Validatable
 
 	public function validate($data)
 	{
-		foreach($data as $key => $value) {
-			$rules = $this->rules[$key];
+	    $data = $this->structurizeData($data);
 
-			foreach($rules as $rule) {
-			    if(!$rule->validate($value)){
-			        $this->errors[] = $rule->error();
-                }
-			}
+		foreach($this->rules as $key => $rules) {
+            if(! isset($data[$key])) continue;
+
+            foreach($rules as $rule) {
+                if (! $rule->validate($data[$key])) { $this->addError($key, $rule); }
+            }
 		}
 
 		return $this->isValid();
@@ -37,5 +40,31 @@ class Validator implements Validatable
 	public function errors()
     {
         return $this->errors;
+    }
+
+    protected function structurizeData($data)
+    {
+        if(! (is_array($data) || is_object($data))){
+            throw new WrongTypeException('Data type must be array or object!');
+        }
+
+         if(is_object($data)){
+            $data =  get_object_vars($data);
+         }
+
+         foreach($this->rules as $key => $rules){
+             foreach($rules as $rule){
+                 if(! isset($data[$key]) && get_class($rule) === "Epam\Rules\Required"){
+                     $data[$key] = null;
+                 }
+             }
+         }
+
+         return $data;
+    }
+
+    protected function addError($key, AbstractRule $rule)
+    {
+        $this->errors[$key][] = $rule->error();
     }
 }

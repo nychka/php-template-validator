@@ -1,6 +1,6 @@
 {
   "name": "php-template-validator",
-  "description": "provides the best option from configuration based on passed data",
+  "description": "Template pattern example",
   "homepage": "http://github.com/nychka/php-template-validator",
   "license": "MIT",
   "authors": [
