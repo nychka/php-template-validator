@@ -56,4 +56,23 @@ class TypeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($rule->validate(NULL));
     }
+
+    public function testIsValid()
+    {
+        $rule = new Type('integer');
+        $rule->validate(123);
+
+        $this->assertTrue($rule->isValid());
+    }
+
+    public function testError()
+    {
+        $rule = new Type('integer');
+        $rule->validate('foo');
+        $errorMessage = 'Rule Type is not valid!';
+
+        $this->assertFalse($rule->isValid());
+        $this->assertEquals($errorMessage, $rule->error());
+    }
+
 }

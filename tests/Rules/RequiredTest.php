@@ -36,6 +36,11 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
      */
     public function testErrorMessageWhenNotDefined()
     {
+        $reflection = new \ReflectionClass(Required::class);
+        $errorMessage = $reflection->getProperty('errorMessage');
+        $errorMessage->setAccessible(true);
+        $errorMessage->setValue($this->rule, null);
+
         $this->rule->error();
     }
 }

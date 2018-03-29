@@ -20,18 +20,19 @@ class Validator implements Validatable
 			$rules = $this->rules[$key];
 
 			foreach($rules as $rule) {
-				try{
-                    $rule->validate($value);
-                }catch(RuleNotPassedException $e){
-				    $this->errors->push($e->getMessage());
-				}finally{
-                    return false;
+			    if(!$rule->validate($value)){
+			        $this->errors[] = $rule->error();
                 }
 			}
 		}
 
-		return true;
+		return $this->isValid();
 	}
+
+	public function isValid()
+    {
+        return count($this->errors) === 0;
+    }
 
 	public function errors()
     {

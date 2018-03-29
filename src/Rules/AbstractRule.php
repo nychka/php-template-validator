@@ -9,6 +9,8 @@ abstract class AbstractRule implements Validatable
     protected $hasError = false;
     protected $errorMessage;
 
+    abstract protected function handle($data);
+
     public function validate($data)
     {
         if(! $this->handle($data)){
@@ -32,6 +34,4 @@ abstract class AbstractRule implements Validatable
         
         return $this->errorMessage;
     }
-
-    abstract protected function handle($data);
 }

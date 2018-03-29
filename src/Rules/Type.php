@@ -6,9 +6,10 @@ use Epam\Exceptions\RuleNotPassedException;
 use \Epam\Validatable;
 use \Epam\Exceptions\WrongTypeException;
 
-class Type implements Validatable
+class Type extends AbstractRule
 {
     private $type;
+    protected $errorMessage = 'Rule Type is not valid!';
 
     public function __construct($type)
     {
@@ -17,14 +18,10 @@ class Type implements Validatable
         $this->type = $type;
     }
 
-    public function validate($data)
+    public function handle($data)
 	{
 	    $currentType = gettype($data);
 
-		if($this->type === $currentType){
-		    return true;
-        }else{
-		    throw new RuleNotPassedException("Expected type '%s', but '%s'");
-        }
+		return $this->type === $currentType;
 	}
 }
