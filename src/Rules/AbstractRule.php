@@ -3,6 +3,7 @@
 namespace Epam\Rules;
 
 use Epam\Validatable;
+use Epam\Exceptions\PropertyNotDefinedException;
 
 abstract class AbstractRule implements Validatable
 {
@@ -15,10 +16,9 @@ abstract class AbstractRule implements Validatable
     {
         if(! $this->handle($data)){
             $this->hasError = true;
-            return false;
         }
 
-        return true;
+        return $this->isValid();
     }
 
     public function isValid()
@@ -29,7 +29,7 @@ abstract class AbstractRule implements Validatable
     public function error()
     {
         if(!(is_string($this->errorMessage) && strlen($this->errorMessage))){
-            throw new \Epam\Exceptions\PropertyNotDefinedException("Define error message for your rule!");
+            throw new PropertyNotDefinedException("Define error message for your rule!");
         }
         
         return $this->errorMessage;

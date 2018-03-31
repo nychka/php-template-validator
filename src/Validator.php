@@ -2,7 +2,6 @@
 
 namespace Epam;
 
-use Epam\Exceptions\RuleNotPassedException;
 use Epam\Exceptions\WrongTypeException;
 use Epam\Rules\AbstractRule;
 use Epam\Rules\Required;
@@ -54,7 +53,7 @@ class Validator implements Validatable
 
          foreach($this->rules as $key => $rules){
              foreach($rules as $rule){
-                 if(! isset($data[$key]) && $rule instanceof Required){
+                 if(! array_key_exists($key, $data) && $rule instanceof Required){
                      $data[$key] = null;
                  }
              }
