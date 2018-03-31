@@ -22,7 +22,7 @@ class Validator implements Validatable
 	    $data = $this->structurizeData($data);
 
 		foreach($this->rules as $key => $rules) {
-            if(! isset($data[$key])) continue;
+            if(! array_key_exists($key, $data)) continue;
 
             foreach($rules as $rule) {
                 if (! $rule->validate($data[$key])) { $this->addError($key, $rule); }
@@ -54,7 +54,7 @@ class Validator implements Validatable
 
          foreach($this->rules as $key => $rules){
              foreach($rules as $rule){
-                 if(! isset($data[$key]) && get_class($rule) === "Epam\Rules\Required"){
+                 if(! isset($data[$key]) && $rule instanceof Required){
                      $data[$key] = null;
                  }
              }
