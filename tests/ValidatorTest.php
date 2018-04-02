@@ -2,6 +2,7 @@
 
 namespace Epam\Test;
 
+use Epam\Exceptions\WrongTypeException;
 use Epam\Validator;
 use Epam\Validatable;
 use Epam\Rules;
@@ -91,5 +92,15 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($validator->validate($data));
         $this->assertEquals(['bar' => ['Rule Epam\Rules\Type is not valid!']], $validator->errors());
+    }
+
+    /**
+     * @expectedException Epam\Exceptions\WrongTypeException
+     */
+    public function testValidatorWithInvalidData()
+    {
+        $validator = new Validator(['foo' => [ new Rules\Required()]]);
+
+        $validator->validate('foo');
     }
 }
