@@ -9,7 +9,7 @@ class RequiredTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->rule = new Required();
-        $this->errorMessage = 'Rule Required is not valid!';
+        $this->errorMessage = 'Rule Epam\Rules\Required is not valid!';
     }
 
     public function testIsValidWhenNull()

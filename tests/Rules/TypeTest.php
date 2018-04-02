@@ -69,7 +69,7 @@ class TypeTest extends \PHPUnit_Framework_TestCase
     {
         $rule = new Type('integer');
         $rule->validate('foo');
-        $errorMessage = 'Rule Type is not valid!';
+        $errorMessage = 'Rule Epam\Rules\Type is not valid!';
 
         $this->assertFalse($rule->isValid());
         $this->assertEquals($errorMessage, $rule->error());

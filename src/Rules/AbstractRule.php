@@ -10,6 +10,11 @@ abstract class AbstractRule implements Validatable
     protected $hasError = false;
     protected $errorMessage;
 
+    public function __construct($option = NULL)
+    {
+        $this->errorMessage = sprintf("Rule %s is not valid!", get_class($this));
+    }
+
     abstract protected function handle($data);
 
     public function validate($data)

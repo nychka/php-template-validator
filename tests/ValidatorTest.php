@@ -40,7 +40,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator($rules);
 
         $this->assertFalse($validator->validate($data));
-        $this->assertEquals($validator->errors(), ['foo' => ['Rule Type is not valid!']]);
+        $this->assertEquals($validator->errors(), ['foo' => ['Rule Epam\Rules\Type is not valid!']]);
     }
 
     public function testValidateWithTwoRulesWhenBothInvalid()
@@ -50,7 +50,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator($rules);
 
         $this->assertFalse($validator->validate($data));
-        $this->assertEquals($validator->errors(), ['foo' => ['Rule Required is not valid!', 'Rule Type is not valid!']]);
+        $this->assertEquals($validator->errors(), ['foo' => ['Rule Epam\Rules\Required is not valid!', 'Rule Epam\Rules\Type is not valid!']]);
     }
 
     public function testNotRequiredDataAreValid()
@@ -90,6 +90,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = new Validator($rules);
 
         $this->assertFalse($validator->validate($data));
-        $this->assertEquals(['bar' => ['Rule Type is not valid!']], $validator->errors());
+        $this->assertEquals(['bar' => ['Rule Epam\Rules\Type is not valid!']], $validator->errors());
     }
 }

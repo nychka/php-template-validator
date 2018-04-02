@@ -1,4 +1,8 @@
 <?php
+require 'vendor/autoload.php';
+
+use Epam\Rules;
+use Epam\Validator;
 /**
  * Create validation component that will be able to validate:
  * - associative arrays
@@ -32,11 +36,11 @@ $rules = [
     ],
     'birth-date' => [
         new Rules\Date('Y-m-d'),
-        new Rules\Age(18)
+//        new Rules\Age(18)
     ],
     'email' => [
         new Rules\Required(),
-        new Rules\Email(),
+//        new Rules\Email(),
     ],
     'password' => [
         new Rules\Required(),
@@ -47,7 +51,7 @@ $rules = [
 
 $validator = new Validator($rules);
 
-if ($validator->validate()) {
+if ($validator->validate($request)) {
     echo 'Ok';
 } else {
     var_dump($validator->errors());
