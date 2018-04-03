@@ -36,11 +36,11 @@ $rules = [
     ],
     'birth-date' => [
         new Rules\Date('Y-m-d'),
-//        new Rules\Age(18)
+        new Rules\Age(18)
     ],
     'email' => [
         new Rules\Required(),
-//        new Rules\Email(),
+        new Rules\Email(),
     ],
     'password' => [
         new Rules\Required(),
